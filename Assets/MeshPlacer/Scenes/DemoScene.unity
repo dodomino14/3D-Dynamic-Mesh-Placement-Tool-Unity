@@ -861,6 +861,7 @@ GameObject:
   - component: {fileID: 1559824019}
   - component: {fileID: 1559824018}
   - component: {fileID: 1559824022}
+  - component: {fileID: 1559824023}
   m_Layer: 0
   m_Name: Table
   m_TagString: Untagged
@@ -968,15 +969,27 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1559824017}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b69f757bbd6b3c74096d6b1970053719, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dimensions: {x: -Infinity, y: 1, z: 1}
+  Dimensions: {x: 1, y: 1, z: 1}
   CenterPoint: {x: 0, y: 0, z: 0}
   SphereRadius: 0.62
   areaType: 0
+--- !u!114 &1559824023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559824017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d653b1a40dc313e478e7f9fe50622887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClutterAreaVisualizer
 --- !u!1 &1704700601
 GameObject:
   m_ObjectHideFlags: 0

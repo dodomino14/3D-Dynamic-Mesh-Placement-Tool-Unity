@@ -137,17 +137,24 @@ public class ClutterPoint
     public Vector3 Value;
 }
 
-[CustomEditor(typeof(ClutterAreaComponent))]
+[CustomEditor(typeof(ClutterAreaVisualizer))]
 public class ClutterAreaEditorScript : Editor
 {
     private ClutterAreaComponent _clutter;
+    ClutterAreaVisualizer _visualizer;
     private ClutterCube _cube = new ClutterCube();
     private Vector3 _previousDimensions;
     void OnEnable()
     {
-        _clutter = target as ClutterAreaComponent;
-        UpdateDimensionsInInspector();
+        _visualizer = target as ClutterAreaVisualizer;
+        _clutter = _visualizer.GetComponent<ClutterAreaComponent>();
+        _visualizer.OnDimensionsUpdatedInInspector += DimensionsUpdatedInEditor;
         _previousDimensions = _clutter.Dimensions;
+        UpdateDimensionsInInspector();
+    }
+    void OnDisable()
+    {
+        _visualizer.OnDimensionsUpdatedInInspector -= DimensionsUpdatedInEditor;
     }
     void OnSceneGUI()
     {
@@ -168,8 +175,6 @@ public class ClutterAreaEditorScript : Editor
         DrawDimension(Color.blue, _cube.BottomForwardRight.Value, _cube.BottomBottomRight.Value);
         DrawDimension(Color.red, _cube.BottomBottomLeft.Value, _cube.BottomBottomRight.Value);
         DrawDimension(Color.green, _cube.BottomBottomRight.Value, _cube.TopBottomRight.Value);
-        if(_previousDimensions != _clutter.Dimensions) DimensionsUpdatedInEditor();
-        _previousDimensions = _clutter.Dimensions;
     }
     private void DrawDimension(Color color, Vector3 pointOne, Vector3 pointTwo)
     {
@@ -223,7 +228,6 @@ public class ClutterAreaEditorScript : Editor
             _cube.TranslateAxis(_cube.VerticalAxis, changedBy);
         if(changedBy.z != 0)
             _cube.TranslateAxis(_cube.DepthAxis, changedBy);
-
+        _previousDimensions = _clutter.Dimensions;
     }
 }
-
