@@ -7,6 +7,7 @@ public class ClutterAreaComponent : MonoBehaviour
 {
     [DelayedProperty, OnValueChanged("DimensionChanged")]
     public Vector3 Dimensions;
+    [OnValueChanged("DimensionChanged")]
     public Vector3 CenterPoint;
     public float SphereRadius;
     private enum AreaType {Box, Cylinder, Mesh, Polygon}

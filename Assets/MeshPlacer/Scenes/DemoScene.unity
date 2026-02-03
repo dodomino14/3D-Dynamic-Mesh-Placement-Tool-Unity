@@ -969,12 +969,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1559824017}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b69f757bbd6b3c74096d6b1970053719, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dimensions: {x: 1, y: 1, z: 1}
+  Dimensions: {x: 1.2870717, y: 1, z: 1}
   CenterPoint: {x: 0, y: 0, z: 0}
   SphereRadius: 0.62
   areaType: 0
