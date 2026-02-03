@@ -6,14 +6,15 @@ using System.Collections.Generic;
 public class ClutterAreaEditorScript : Editor
 {
     private ClutterAreaComponent _clutter;
-    ClutterAreaVisualizer _visualizer;
-    private ClutterCube _cube = new ClutterCube();
+    private ClutterCube _cube;
+    private ClutterAreaVisualizer _visualizer;
     private Vector3 _previousDimensions;
     private Vector3 _previousCenter;
     void OnEnable()
     {
         _visualizer = target as ClutterAreaVisualizer;
         _clutter = _visualizer.GetComponent<ClutterAreaComponent>();
+        _cube = _visualizer.Cube;
         _visualizer.OnDimensionsUpdatedInInspector += DimensionsUpdatedInEditor;
         _previousDimensions = _clutter.Dimensions;
         _previousCenter = _cube.Center;
@@ -27,6 +28,77 @@ public class ClutterAreaEditorScript : Editor
     {
         DrawBoxedClutterArea();
         DrawBoxDimensions();
+        DrawCenter();
+        DrawGrid();
+    }
+    private void DrawGrid()
+    {
+        if(_clutter.GridSize.x <= 0 || _clutter.GridSize.y <= 0) return;
+        Handles.color = Color.green;
+        if(_clutter.GridDisplay == GridDisplayStyle.BaseGrid || _clutter.GridDisplay == GridDisplayStyle.FullGrid)
+        {
+            Vector3 bottomFrontLeft = _clutter.transform.position +  _cube.ForwardSquare.Bottom.P1.Value;
+            Vector3 bottomBackRight = _clutter.transform.position + _cube.BackSquare.Bottom.P2.Value;
+            DrawGridRows(bottomFrontLeft, bottomBackRight);
+            DrawGridColumns(bottomFrontLeft, bottomBackRight);
+        }
+
+        if(_clutter.GridDisplay == GridDisplayStyle.VerticalGrid || _clutter.GridDisplay == GridDisplayStyle.FullGrid)
+        {
+            Vector3 bottomBackLeft = _cube.BackSquare.Bottom.P1.Value;
+            Vector3 topBackRight = _cube.TopSquare.Bottom.P2.Value;
+            DrawGridRows(bottomBackLeft, topBackRight);
+            DrawGridColumns(bottomBackLeft, topBackRight);
+        }
+
+        Handles.color = Color.white;
+    }
+    private void DrawGridColumns(Vector3 frontLeft, Vector3 bottomRight)
+    {
+        Vector3 areaDimensions = bottomRight - frontLeft;
+        int columns = (int) Mathf.Abs(areaDimensions.x / _clutter.GridSize.y);
+        Vector3 start = frontLeft;
+        Vector3 end = start + new Vector3(0, 0, areaDimensions.z);
+        for(int y = 0; y < columns - 1; y++)
+        {
+            start.x += _clutter.GridSize.x;
+            end.x = start.x;
+            Handles.DrawLine(start, end);
+        }
+        start.x += _clutter.GridSize.x;
+        
+        if(Mathf.Abs(start.x - bottomRight.x) > 0.01f)
+            DrawErrorArea(start, bottomRight);
+    }
+    private void DrawGridRows(Vector3 frontLeft, Vector3 bottomRight)
+    {
+        Vector3 areaDimensions = bottomRight - frontLeft;
+        Vector3 start = frontLeft;
+        Vector3 end = start + new Vector3(areaDimensions.x, 0, 0);
+        int rows = (int) Mathf.Abs(areaDimensions.z / _clutter.GridSize.x);
+        for(int y = 0; y < rows - 1; y++)
+        {
+            start.z -= _clutter.GridSize.y;
+            end.z = start.z;
+            Handles.DrawLine(start, end);
+        }
+        start.z -= _clutter.GridSize.y;
+        
+        if(Mathf.Abs(start.z - bottomRight.z) > 0.01f)
+            DrawErrorArea(start, bottomRight);
+    }
+    private void DrawErrorArea(Vector3 start, Vector3 end)
+    {
+        Handles.color = Color.white;
+        //Starts top-left, goes clockwise
+        Vector3[] verts = {start, new Vector3(end.x, start.y, start.z), end, new Vector3(start.x, start.y, end.z)};
+        Handles.DrawSolidRectangleWithOutline(verts, new Color(1, 1, 0, 0.5f), Color.darkSlateGray);
+    }
+    private void DrawCenter()
+    {
+        Handles.color = Color.pink;
+        Handles.DrawSolidDisc(_cube.Center + _clutter.transform.position, Vector3.up, 0.05f);
+        Handles.color = Color.white;
     }
     private void DrawBoxedClutterArea()
     {

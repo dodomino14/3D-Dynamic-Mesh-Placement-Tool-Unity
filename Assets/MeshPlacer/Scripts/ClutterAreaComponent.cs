@@ -2,6 +2,8 @@ using System;
 using UnityEditor;
 using UnityEngine;
 using Sirenix.OdinInspector;
+public enum GridDisplayStyle {BaseGrid, VerticalGrid, FullGrid, None}
+
 [RequireComponent(typeof(ClutterAreaVisualizer))]
 public class ClutterAreaComponent : MonoBehaviour
 {
@@ -9,6 +11,9 @@ public class ClutterAreaComponent : MonoBehaviour
     public Vector3 Dimensions;
     [OnValueChanged("DimensionChanged")]
     public Vector3 CenterPoint;
+    public Vector2 GridSize;
+
+    public GridDisplayStyle GridDisplay;
     public float SphereRadius;
     private enum AreaType {Box, Cylinder, Mesh, Polygon}
     [SerializeField] private AreaType areaType;
