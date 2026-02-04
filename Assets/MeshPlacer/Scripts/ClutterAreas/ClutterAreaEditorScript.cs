@@ -10,6 +10,7 @@ public class ClutterAreaEditorScript : Editor
     private ClutterAreaVisualizer _visualizer;
     private Vector3 _previousDimensions;
     private Vector3 _previousCenter;
+    private MeshPlacementSettings _settings;
     void OnEnable()
     {
         _visualizer = target as ClutterAreaVisualizer;
@@ -26,6 +27,7 @@ public class ClutterAreaEditorScript : Editor
     }
     void OnSceneGUI()
     {
+        _settings = MeshPlacementManager.Settings;
         DrawBoxedClutterArea();
         DrawBoxDimensions();
         DrawCenter();
@@ -34,8 +36,9 @@ public class ClutterAreaEditorScript : Editor
     private void DrawGrid()
     {
         if(_clutter.GridSize.x <= 0 || _clutter.GridSize.y <= 0) return;
-        Handles.color = Color.green;
-        if(_clutter.GridDisplay == GridDisplayStyle.BaseGrid || _clutter.GridDisplay == GridDisplayStyle.FullGrid)
+        Handles.color = _settings.GridColor;
+        GridDisplayStyle displayFormat = _visualizer.GridDisplay;
+        if(displayFormat == GridDisplayStyle.BaseGrid || displayFormat == GridDisplayStyle.FullGrid)
         {
             Vector3 bottomFrontLeft = _clutter.transform.position +  _cube.ForwardSquare.Bottom.P1.Value;
             Vector3 bottomBackRight = _clutter.transform.position + _cube.BackSquare.Bottom.P2.Value;
@@ -43,7 +46,7 @@ public class ClutterAreaEditorScript : Editor
             DrawGridColumns(bottomFrontLeft, bottomBackRight);
         }
 
-        if(_clutter.GridDisplay == GridDisplayStyle.VerticalGrid || _clutter.GridDisplay == GridDisplayStyle.FullGrid)
+        if(displayFormat == GridDisplayStyle.VerticalGrid || displayFormat == GridDisplayStyle.FullGrid)
         {
             Vector3 bottomBackLeft = _cube.BackSquare.Bottom.P1.Value;
             Vector3 topBackRight = _cube.TopSquare.Bottom.P2.Value;
@@ -51,7 +54,7 @@ public class ClutterAreaEditorScript : Editor
             DrawGridColumns(bottomBackLeft, topBackRight);
         }
 
-        Handles.color = Color.white;
+        Handles.color = _settings.DefaultColor;
     }
     private void DrawGridColumns(Vector3 frontLeft, Vector3 bottomRight)
     {
@@ -89,16 +92,17 @@ public class ClutterAreaEditorScript : Editor
     }
     private void DrawErrorArea(Vector3 start, Vector3 end)
     {
+        //Later draw call will mix whatever color it's given with the Handles color, so it's best for this to always be set to white
         Handles.color = Color.white;
         //Starts top-left, goes clockwise
         Vector3[] verts = {start, new Vector3(end.x, start.y, start.z), end, new Vector3(start.x, start.y, end.z)};
-        Handles.DrawSolidRectangleWithOutline(verts, new Color(1, 1, 0, 0.5f), Color.darkSlateGray);
+        Handles.DrawSolidRectangleWithOutline(verts, _settings.ErrorColor, Color.darkSlateGray);
     }
     private void DrawCenter()
     {
-        Handles.color = Color.pink;
-        Handles.DrawSolidDisc(_cube.Center + _clutter.transform.position, Vector3.up, 0.05f);
-        Handles.color = Color.white;
+        Handles.color = _settings.CenterColor;
+        Handles.DrawSolidDisc(_cube.Center + _clutter.transform.position, Vector3.up, _settings.HandleSize);
+        Handles.color = _settings.DefaultColor;
     }
     private void DrawBoxedClutterArea()
     {
@@ -118,12 +122,11 @@ public class ClutterAreaEditorScript : Editor
     private void DrawDimension(Color color, Vector3 pointOne, Vector3 pointTwo)
     {
         Vector3 basePosition = _clutter.transform.position;
-        Color baseColor = Handles.color;
         Handles.color = color;
         Handles.DrawLine(basePosition + pointOne, basePosition + pointTwo, 4f);
-        Handles.color = Color.white;
+        Handles.color = _settings.TextColor;
         Handles.Label(basePosition + (pointOne + pointTwo) / 2f, (pointOne - pointTwo).magnitude + "");
-        Handles.color = baseColor;
+        Handles.color = _settings.DefaultColor;
     }
     private void DrawSquare(ClutterSquare square)
     {
@@ -138,7 +141,7 @@ public class ClutterAreaEditorScript : Editor
     {
         Vector3 centerPosition = _clutter.transform.position + square.Center;
         EditorGUI.BeginChangeCheck();        
-        Vector3 sliderMovement = Handles.Slider(centerPosition, square.MovementAxis, 0.025f, Handles.DotHandleCap, 0.1f);
+        Vector3 sliderMovement = Handles.Slider(centerPosition, square.MovementAxis, _settings.HandleSize, Handles.DotHandleCap, 0.1f);
         if (EditorGUI.EndChangeCheck())
         {
             sliderMovement -= _clutter.transform.position;
