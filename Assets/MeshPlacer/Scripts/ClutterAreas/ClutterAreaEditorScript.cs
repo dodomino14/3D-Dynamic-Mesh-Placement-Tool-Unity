@@ -141,7 +141,7 @@ public class ClutterAreaEditorScript : Editor
     {
         Vector3 centerPosition = _clutter.transform.position + square.Center;
         EditorGUI.BeginChangeCheck();        
-        Vector3 sliderMovement = Handles.Slider(centerPosition, square.MovementAxis, _settings.HandleSize, Handles.DotHandleCap, 0.1f);
+        Vector3 sliderMovement = Handles.Slider(centerPosition, square.MovementAxis, _settings.HandleSize, Handles.DotHandleCap, _settings.SnapIncrement);
         if (EditorGUI.EndChangeCheck())
         {
             sliderMovement -= _clutter.transform.position;

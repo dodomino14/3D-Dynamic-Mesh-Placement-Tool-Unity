@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [CreateAssetMenu(menuName = "Clutter/Settings", fileName = "New Mesh Placement Settings")]
 public class MeshPlacementSettings : ScriptableObject
