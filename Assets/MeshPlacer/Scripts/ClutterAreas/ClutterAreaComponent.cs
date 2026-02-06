@@ -18,4 +18,10 @@ public class ClutterAreaComponent : MonoBehaviour
     {
         GetComponent<ClutterAreaVisualizer>().DimensionsUpdated();
     }
+    [Button]
+    public void RebuildVisualization()
+    {
+        GetComponent<ClutterAreaVisualizer>().Cube = new ClutterCube(gameObject);
+        GetComponent<ClutterAreaVisualizer>().DimensionsUpdated();
+    }
 }

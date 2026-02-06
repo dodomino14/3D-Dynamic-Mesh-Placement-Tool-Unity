@@ -4,6 +4,7 @@ public class ClutterCube
 {
     public ClutterSquare TopSquare, BottomSquare, ForwardSquare, BackSquare, LeftSquare, RightSquare;
     public Vector3 Center { get => GetCenter();}
+    public Vector3 LocalCenter {get => GameObject.transform.rotation * Center;}
     public float Width {get => RightSquare.Center.x - LeftSquare.Center.x;}
     public float Height {get => TopSquare.Center.y - BottomSquare.Center.y;}
     public float Depth {get => ForwardSquare.Center.z - BackSquare.Center.z;}
@@ -21,6 +22,8 @@ public class ClutterCube
     public ClutterPoint BottomForwardRight {get => BottomSquare.Top.P2;}
     public ClutterPoint BottomBottomRight {get => BottomSquare.Bottom.P2;}
     public ClutterPoint BottomBottomLeft {get => BottomSquare.Bottom.P1;}
+
+    public GameObject GameObject;
     public Vector3 GetCenter()
     {
         return (TopSquare.Center + BottomSquare.Center + LeftSquare.Center + RightSquare.Center + ForwardSquare.Center + BackSquare.Center) / 6.0f;
@@ -30,21 +33,23 @@ public class ClutterCube
         TopSquare.Translate(newValue);
         BottomSquare.Translate(newValue);
     }
-    public ClutterCube()
+    public ClutterCube(GameObject owner)
     {
+        if(owner == null) Debug.LogError("Attempted to build clutter cube with a null owner!");
+        GameObject = owner;
         //Schema -
         //t/d - top/down
         //f/b - forward/back
         //l/r - left/right
-        ClutterPoint tfl = new ClutterPoint{Value = new Vector3(-0.5f, 0.5f, 0.5f)};
-        ClutterPoint tfr = new ClutterPoint{Value = new Vector3(0.5f, 0.5f, 0.5f)};
-        ClutterPoint tbl = new ClutterPoint{Value = new Vector3(-0.5f, 0.5f, -0.5f)};
-        ClutterPoint tbr = new ClutterPoint{Value = new Vector3(0.5f, 0.5f, -0.5f)};
+        ClutterPoint tfl = new ClutterPoint(new Vector3(-0.5f, 0.5f, 0.5f), this);
+        ClutterPoint tfr = new ClutterPoint(new Vector3(0.5f, 0.5f, 0.5f), this);
+        ClutterPoint tbl = new ClutterPoint(new Vector3(-0.5f, 0.5f, -0.5f), this);
+        ClutterPoint tbr = new ClutterPoint(new Vector3(0.5f, 0.5f, -0.5f), this);
 
-        ClutterPoint dfl = new ClutterPoint{Value = new Vector3(-0.5f, -0.5f, 0.5f)};
-        ClutterPoint dfr = new ClutterPoint{Value = new Vector3(0.5f, -0.5f, 0.5f)};
-        ClutterPoint dbl = new ClutterPoint{Value = new Vector3(-0.5f, -0.5f, -0.5f)};
-        ClutterPoint dbr = new ClutterPoint{Value = new Vector3(0.5f, -0.5f, -0.5f)};
+        ClutterPoint dfl = new ClutterPoint(new Vector3(-0.5f, -0.5f, 0.5f), this);
+        ClutterPoint dfr = new ClutterPoint(new Vector3(0.5f, -0.5f, 0.5f), this);
+        ClutterPoint dbl = new ClutterPoint(new Vector3(-0.5f, -0.5f, -0.5f), this);
+        ClutterPoint dbr = new ClutterPoint(new Vector3(0.5f, -0.5f, -0.5f), this);
         
         ClutterLine topFront = new ClutterLine{P1 = tfl, P2 = tfr};
         ClutterLine topBack =  new ClutterLine{P1 = tbl, P2 = tbr};
@@ -60,12 +65,12 @@ public class ClutterCube
         ClutterLine forwardRight = new ClutterLine{P1 = tfr, P2 = dfr};
         ClutterLine backLeft = new ClutterLine{P1 = tbl, P2 = dbl};
         ClutterLine backRight = new ClutterLine{P1 = tbr, P2 = dbr};
-        TopSquare = new ClutterSquare{Top = topFront, Bottom = topBack, Left = topLeft, Right = topRight};
-        BottomSquare = new ClutterSquare{Top = downFront, Bottom = downBack, Left = downLeft, Right = downRight};
-        ForwardSquare = new ClutterSquare{Top = topFront, Bottom = downFront, Left = forwardLeft, Right = forwardRight};
-        BackSquare = new ClutterSquare{Top = topBack, Bottom = downBack, Left = backLeft, Right = backRight};
-        LeftSquare = new ClutterSquare{Top = topLeft, Bottom = downLeft, Left = forwardLeft, Right = backLeft};
-        RightSquare = new ClutterSquare{Top = topRight, Bottom = downRight, Left = forwardRight, Right = backRight};
+        TopSquare = new ClutterSquare (topFront, topBack, topLeft, topRight, this);
+        BottomSquare = new ClutterSquare (downFront, downBack, downLeft, downRight, this);
+        ForwardSquare = new ClutterSquare (topFront, downFront, forwardLeft, forwardRight, this);
+        BackSquare = new ClutterSquare (topBack, downBack, backLeft, backRight, this);
+        LeftSquare = new ClutterSquare (topLeft,downLeft, forwardLeft, backLeft, this);
+        RightSquare = new ClutterSquare (topRight, downRight, forwardRight, backRight, this);
 
         TopSquare.MovementAxis = Vector3Int.up;
         BottomSquare.MovementAxis = Vector3Int.down;
@@ -88,7 +93,17 @@ public class ClutterSquare
 {
     public ClutterLine Top, Bottom, Left, Right;
     public Vector3Int MovementAxis;
+    private ClutterCube _owner;
     public Vector3 Center {get => GetCenter();}
+    public Vector3 LocalCenter {get => _owner.GameObject.transform.rotation * Center;}
+    public ClutterSquare(ClutterLine top, ClutterLine bottom, ClutterLine left, ClutterLine right, ClutterCube owner)
+    {
+        Top = top;
+        Bottom = bottom;
+        Left = left;
+        Right = right;
+        _owner = owner;
+    } 
     public void Slide(Vector3 destination)
     {
         Top.Slide(destination);
@@ -147,4 +162,12 @@ public class ClutterLine
 public class ClutterPoint
 {
     public Vector3 Value;
+    protected ClutterCube _owner;
+    public Vector3 LocalValue {get => _owner.GameObject.transform.rotation * Value;}
+    public ClutterPoint(Vector3 value, ClutterCube owner)
+    {
+        Value = value;
+        _owner = owner;
+    }
+
 }
