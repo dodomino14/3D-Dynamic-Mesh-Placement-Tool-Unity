@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
-using System.Collections.Generic;
+using System.Collections;
+using UnityEngine.InputSystem;
 
 [CustomEditor(typeof(ClutterAreaVisualizer))]
 public class ClutterAreaEditorScript : Editor
@@ -14,13 +15,20 @@ public class ClutterAreaEditorScript : Editor
     
     void OnEnable()
     {
-        ConfigureDefaults();
+        _visualizer = target as ClutterAreaVisualizer;
+        _visualizer.StartCoroutine(ConfigureAtEndOfFrame());
         _visualizer.OnDimensionsUpdatedInInspector += DimensionsUpdatedInEditor;
+    }
+    IEnumerator ConfigureAtEndOfFrame()
+    {
+        yield return null;
+        ConfigureDefaults();
     }
     void ConfigureDefaults()
     {
         _visualizer = target as ClutterAreaVisualizer;
         _clutter = _visualizer.GetComponent<ClutterAreaComponent>();
+        _settings = MeshPlacementManager.Settings;
         if(_cube == null)
         {
             if(_visualizer.Cube == null) 
@@ -30,18 +38,25 @@ public class ClutterAreaEditorScript : Editor
         _previousDimensions = _clutter.Dimensions;
         _previousCenter = _cube.Center;
         UpdateInspectorValues();
+        if(_settings != null && _settings.HideGizmosOnEnable) Tools.current = Tool.None;
+        else Tools.current = Tool.Move;
+    }
+    private void YPressed(InputAction.CallbackContext context)
+    {
+        Debug.Log("Y Pressed");
     }
     void OnDisable()
     {
         _visualizer.OnDimensionsUpdatedInInspector -= DimensionsUpdatedInEditor;
+        Tools.current = Tool.Move;
     }
     void OnSceneGUI()
     {
         _settings = MeshPlacementManager.Settings;
         if(_cube.GameObject == null) return;
+        DrawCenter();
         DrawBoxedClutterArea();
         DrawBoxDimensions();
-        DrawCenter();
         DrawGrid();
     }
     private void DrawGrid()
@@ -112,8 +127,21 @@ public class ClutterAreaEditorScript : Editor
     private void DrawCenter()
     {
         Handles.color = _settings.CenterColor;
-        Handles.DrawSolidDisc(_cube.LocalCenter + _clutter.transform.position, Vector3.up, _settings.HandleSize);
+        EditorGUI.BeginChangeCheck();
+        Vector3 currentCenter = _cube.LocalCenter;
+        Vector3 handlePosition = Handles.FreeMoveHandle(_cube.LocalCenter + _clutter.transform.position, _settings.HandleSize * 2f, _settings.SnapIncrement * Vector3.one, Handles.SphereHandleCap);
+        if (EditorGUI.EndChangeCheck())
+        {
+            if(_settings.XKey.IsPressed()) handlePosition = new Vector3(handlePosition.x - _cube.GameObject.transform.position.x, currentCenter.y, currentCenter.z);
+            else if(_settings.YKey.IsPressed()) handlePosition = new Vector3(currentCenter.x, handlePosition.y - _cube.GameObject.transform.position.y, currentCenter.z);
+            else if(_settings.ZKey.IsPressed()) handlePosition = new Vector3(currentCenter.x, currentCenter.y, handlePosition.z- _cube.GameObject.transform.position.z);
+            else handlePosition = currentCenter;
+            
+            _cube.MoveTo(handlePosition);
+            UpdateInspectorValues();
+        }
         Handles.color = _settings.DefaultColor;
+
     }
     private void DrawBoxedClutterArea()
     {
@@ -172,9 +200,9 @@ public class ClutterAreaEditorScript : Editor
         _clutter.Dimensions.x = _cube.Width;
         _clutter.Dimensions.y = _cube.Height;
         _clutter.Dimensions.z = _cube.Depth;
-        _clutter.CenterPoint = _cube.Center;
         _previousDimensions = _clutter.Dimensions;
-        _previousCenter = _cube.GetCenter();
+        _clutter.CenterPoint = _cube.Center;
+        _previousCenter = _cube.Center;
     }
     private void DimensionsUpdatedInEditor()
     {

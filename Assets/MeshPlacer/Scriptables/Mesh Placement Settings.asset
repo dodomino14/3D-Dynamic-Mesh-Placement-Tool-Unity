@@ -86,3 +86,4 @@ MonoBehaviour:
     m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+  _hideGizmosOnEnable: 1

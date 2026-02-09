@@ -893,6 +893,131 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!1 &1484912059
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1484912064}
+  - component: {fileID: 1484912063}
+  - component: {fileID: 1484912062}
+  - component: {fileID: 1484912061}
+  - component: {fileID: 1484912060}
+  m_Layer: 0
+  m_Name: Input Validator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1484912060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484912059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81a9b6808bc7fdb498a2093c01ee0d51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputValidator
+--- !u!65 &1484912061
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484912059}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1484912062
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484912059}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1484912063
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484912059}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1484912064
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484912059}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.26451, y: 1, z: 3.44874}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1559824017
 GameObject:
   m_ObjectHideFlags: 0
@@ -1019,8 +1144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b69f757bbd6b3c74096d6b1970053719, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dimensions: {x: 5, y: 1, z: 1}
-  CenterPoint: {x: 0, y: 1, z: 0}
+  Dimensions: {x: 3, y: 1, z: 1}
+  CenterPoint: {x: -1, y: 0, z: 0}
   GridSize: {x: 0.2, y: 0.2}
   areaType: 0
 --- !u!114 &1559824023
@@ -1038,512 +1163,147 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 1559824017}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: Cube
-      Entry: 7
-      Data: 0|ClutterCube, Assembly-CSharp
-    - Name: TopSquare
-      Entry: 7
-      Data: 1|ClutterSquare, Assembly-CSharp
-    - Name: Top
-      Entry: 7
-      Data: 2|ClutterLine, Assembly-CSharp
-    - Name: P1
-      Entry: 7
-      Data: 3|ClutterPoint, Assembly-CSharp
-    - Name: Value
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: -2.5
-    - Name: 
-      Entry: 4
-      Data: 1.5
-    - Name: 
-      Entry: 4
-      Data: 0.5
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: P2
-      Entry: 7
-      Data: 4|ClutterPoint, Assembly-CSharp
-    - Name: Value
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 2.5
-    - Name: 
-      Entry: 4
-      Data: 1.5
-    - Name: 
-      Entry: 4
-      Data: 0.5
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Bottom
-      Entry: 7
-      Data: 5|ClutterLine, Assembly-CSharp
-    - Name: P1
-      Entry: 7
-      Data: 6|ClutterPoint, Assembly-CSharp
-    - Name: Value
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: -2.5
-    - Name: 
-      Entry: 4
-      Data: 1.5
-    - Name: 
-      Entry: 4
-      Data: -0.5
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: P2
-      Entry: 7
-      Data: 7|ClutterPoint, Assembly-CSharp
-    - Name: Value
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 2.5
-    - Name: 
-      Entry: 4
-      Data: 1.5
-    - Name: 
-      Entry: 4
-      Data: -0.5
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Left
-      Entry: 7
-      Data: 8|ClutterLine, Assembly-CSharp
-    - Name: P1
-      Entry: 9
-      Data: 3
-    - Name: P2
-      Entry: 9
-      Data: 6
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Right
-      Entry: 7
-      Data: 9|ClutterLine, Assembly-CSharp
-    - Name: P1
-      Entry: 9
-      Data: 4
-    - Name: P2
-      Entry: 9
-      Data: 7
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: MovementAxis
-      Entry: 7
-      Data: UnityEngine.Vector3Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: BottomSquare
-      Entry: 7
-      Data: 10|ClutterSquare, Assembly-CSharp
-    - Name: Top
-      Entry: 7
-      Data: 11|ClutterLine, Assembly-CSharp
-    - Name: P1
-      Entry: 7
-      Data: 12|ClutterPoint, Assembly-CSharp
-    - Name: Value
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: -2.5
-    - Name: 
-      Entry: 4
-      Data: 0.5
-    - Name: 
-      Entry: 4
-      Data: 0.5
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: P2
-      Entry: 7
-      Data: 13|ClutterPoint, Assembly-CSharp
-    - Name: Value
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 2.5
-    - Name: 
-      Entry: 4
-      Data: 0.5
-    - Name: 
-      Entry: 4
-      Data: 0.5
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Bottom
-      Entry: 7
-      Data: 14|ClutterLine, Assembly-CSharp
-    - Name: P1
-      Entry: 7
-      Data: 15|ClutterPoint, Assembly-CSharp
-    - Name: Value
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: -2.5
-    - Name: 
-      Entry: 4
-      Data: 0.5
-    - Name: 
-      Entry: 4
-      Data: -0.5
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: P2
-      Entry: 7
-      Data: 16|ClutterPoint, Assembly-CSharp
-    - Name: Value
-      Entry: 7
-      Data: UnityEngine.Vector3, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 2.5
-    - Name: 
-      Entry: 4
-      Data: 0.5
-    - Name: 
-      Entry: 4
-      Data: -0.5
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Left
-      Entry: 7
-      Data: 17|ClutterLine, Assembly-CSharp
-    - Name: P1
-      Entry: 9
-      Data: 12
-    - Name: P2
-      Entry: 9
-      Data: 15
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Right
-      Entry: 7
-      Data: 18|ClutterLine, Assembly-CSharp
-    - Name: P1
-      Entry: 9
-      Data: 13
-    - Name: P2
-      Entry: 9
-      Data: 16
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: MovementAxis
-      Entry: 7
-      Data: UnityEngine.Vector3Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 3
-      Data: -1
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: ForwardSquare
-      Entry: 7
-      Data: 19|ClutterSquare, Assembly-CSharp
-    - Name: Top
-      Entry: 9
-      Data: 2
-    - Name: Bottom
-      Entry: 9
-      Data: 11
-    - Name: Left
-      Entry: 7
-      Data: 20|ClutterLine, Assembly-CSharp
-    - Name: P1
-      Entry: 9
-      Data: 3
-    - Name: P2
-      Entry: 9
-      Data: 12
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Right
-      Entry: 7
-      Data: 21|ClutterLine, Assembly-CSharp
-    - Name: P1
-      Entry: 9
-      Data: 4
-    - Name: P2
-      Entry: 9
-      Data: 13
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: MovementAxis
-      Entry: 7
-      Data: UnityEngine.Vector3Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: BackSquare
-      Entry: 7
-      Data: 22|ClutterSquare, Assembly-CSharp
-    - Name: Top
-      Entry: 9
-      Data: 5
-    - Name: Bottom
-      Entry: 9
-      Data: 14
-    - Name: Left
-      Entry: 7
-      Data: 23|ClutterLine, Assembly-CSharp
-    - Name: P1
-      Entry: 9
-      Data: 6
-    - Name: P2
-      Entry: 9
-      Data: 15
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Right
-      Entry: 7
-      Data: 24|ClutterLine, Assembly-CSharp
-    - Name: P1
-      Entry: 9
-      Data: 7
-    - Name: P2
-      Entry: 9
-      Data: 16
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: MovementAxis
-      Entry: 7
-      Data: UnityEngine.Vector3Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 3
-      Data: -1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: LeftSquare
-      Entry: 7
-      Data: 25|ClutterSquare, Assembly-CSharp
-    - Name: Top
-      Entry: 9
-      Data: 8
-    - Name: Bottom
-      Entry: 9
-      Data: 17
-    - Name: Left
-      Entry: 9
-      Data: 20
-    - Name: Right
-      Entry: 9
-      Data: 23
-    - Name: MovementAxis
-      Entry: 7
-      Data: UnityEngine.Vector3Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: -1
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: RightSquare
-      Entry: 7
-      Data: 26|ClutterSquare, Assembly-CSharp
-    - Name: Top
-      Entry: 9
-      Data: 9
-    - Name: Bottom
-      Entry: 9
-      Data: 18
-    - Name: Left
-      Entry: 9
-      Data: 21
-    - Name: Right
-      Entry: 9
-      Data: 24
-    - Name: MovementAxis
-      Entry: 7
-      Data: UnityEngine.Vector3Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: HorizontalAxis
-      Entry: 7
-      Data: System.ValueTuple`2[[ClutterSquare, Assembly-CSharp],[ClutterSquare,
-        Assembly-CSharp]], mscorlib
-    - Name: Item1
-      Entry: 9
-      Data: 26
-    - Name: Item2
-      Entry: 9
-      Data: 25
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: VerticalAxis
-      Entry: 7
-      Data: System.ValueTuple`2[[ClutterSquare, Assembly-CSharp],[ClutterSquare,
-        Assembly-CSharp]], mscorlib
-    - Name: Item1
-      Entry: 9
-      Data: 1
-    - Name: Item2
-      Entry: 9
-      Data: 10
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: DepthAxis
-      Entry: 7
-      Data: System.ValueTuple`2[[ClutterSquare, Assembly-CSharp],[ClutterSquare,
-        Assembly-CSharp]], mscorlib
-    - Name: Item1
-      Entry: 9
-      Data: 19
-    - Name: Item2
-      Entry: 9
-      Data: 22
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: GameObject
-      Entry: 10
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
+    SerializationNodes: []
   GridDisplay: 0
+  Cube:
+    TopSquare:
+      Top:
+        P1:
+          Value: {x: -2.5, y: 0.5, z: 0.5}
+        P2:
+          Value: {x: 0.5, y: 0.5, z: 0.5}
+      Bottom:
+        P1:
+          Value: {x: -2.5, y: 0.5, z: -0.5}
+        P2:
+          Value: {x: 0.5, y: 0.5, z: -0.5}
+      Left:
+        P1:
+          Value: {x: -2.5, y: 0.5, z: 0.5}
+        P2:
+          Value: {x: -2.5, y: 0.5, z: -0.5}
+      Right:
+        P1:
+          Value: {x: 0.5, y: 0.5, z: 0.5}
+        P2:
+          Value: {x: 0.5, y: 0.5, z: -0.5}
+      MovementAxis: {x: 0, y: 1, z: 0}
+    BottomSquare:
+      Top:
+        P1:
+          Value: {x: -2.5, y: -0.5, z: 0.5}
+        P2:
+          Value: {x: 0.5, y: -0.5, z: 0.5}
+      Bottom:
+        P1:
+          Value: {x: -2.5, y: -0.5, z: -0.5}
+        P2:
+          Value: {x: 0.5, y: -0.5, z: -0.5}
+      Left:
+        P1:
+          Value: {x: -2.5, y: -0.5, z: 0.5}
+        P2:
+          Value: {x: -2.5, y: -0.5, z: -0.5}
+      Right:
+        P1:
+          Value: {x: 0.5, y: -0.5, z: 0.5}
+        P2:
+          Value: {x: 0.5, y: -0.5, z: -0.5}
+      MovementAxis: {x: 0, y: -1, z: 0}
+    ForwardSquare:
+      Top:
+        P1:
+          Value: {x: -2.5, y: 0.5, z: 0.5}
+        P2:
+          Value: {x: 0.5, y: 0.5, z: 0.5}
+      Bottom:
+        P1:
+          Value: {x: -2.5, y: -0.5, z: 0.5}
+        P2:
+          Value: {x: 0.5, y: -0.5, z: 0.5}
+      Left:
+        P1:
+          Value: {x: -2.5, y: 0.5, z: 0.5}
+        P2:
+          Value: {x: -2.5, y: -0.5, z: 0.5}
+      Right:
+        P1:
+          Value: {x: 0.5, y: 0.5, z: 0.5}
+        P2:
+          Value: {x: 0.5, y: -0.5, z: 0.5}
+      MovementAxis: {x: 0, y: 0, z: 1}
+    BackSquare:
+      Top:
+        P1:
+          Value: {x: -2.5, y: 0.5, z: -0.5}
+        P2:
+          Value: {x: 0.5, y: 0.5, z: -0.5}
+      Bottom:
+        P1:
+          Value: {x: -2.5, y: -0.5, z: -0.5}
+        P2:
+          Value: {x: 0.5, y: -0.5, z: -0.5}
+      Left:
+        P1:
+          Value: {x: -2.5, y: 0.5, z: -0.5}
+        P2:
+          Value: {x: -2.5, y: -0.5, z: -0.5}
+      Right:
+        P1:
+          Value: {x: 0.5, y: 0.5, z: -0.5}
+        P2:
+          Value: {x: 0.5, y: -0.5, z: -0.5}
+      MovementAxis: {x: 0, y: 0, z: -1}
+    LeftSquare:
+      Top:
+        P1:
+          Value: {x: -2.5, y: 0.5, z: 0.5}
+        P2:
+          Value: {x: -2.5, y: 0.5, z: -0.5}
+      Bottom:
+        P1:
+          Value: {x: -2.5, y: -0.5, z: 0.5}
+        P2:
+          Value: {x: -2.5, y: -0.5, z: -0.5}
+      Left:
+        P1:
+          Value: {x: -2.5, y: 0.5, z: 0.5}
+        P2:
+          Value: {x: -2.5, y: -0.5, z: 0.5}
+      Right:
+        P1:
+          Value: {x: -2.5, y: 0.5, z: -0.5}
+        P2:
+          Value: {x: -2.5, y: -0.5, z: -0.5}
+      MovementAxis: {x: -1, y: 0, z: 0}
+    RightSquare:
+      Top:
+        P1:
+          Value: {x: 0.5, y: 0.5, z: 0.5}
+        P2:
+          Value: {x: 0.5, y: 0.5, z: -0.5}
+      Bottom:
+        P1:
+          Value: {x: 0.5, y: -0.5, z: 0.5}
+        P2:
+          Value: {x: 0.5, y: -0.5, z: -0.5}
+      Left:
+        P1:
+          Value: {x: 0.5, y: 0.5, z: 0.5}
+        P2:
+          Value: {x: 0.5, y: -0.5, z: 0.5}
+      Right:
+        P1:
+          Value: {x: 0.5, y: 0.5, z: -0.5}
+        P2:
+          Value: {x: 0.5, y: -0.5, z: -0.5}
+      MovementAxis: {x: 1, y: 0, z: 0}
+    GameObject: {fileID: 1559824017}
 --- !u!1 &1704700601
 GameObject:
   m_ObjectHideFlags: 0
@@ -1837,3 +1597,4 @@ SceneRoots:
   - {fileID: 277007832}
   - {fileID: 1875197226}
   - {fileID: 472084183}
+  - {fileID: 1484912064}

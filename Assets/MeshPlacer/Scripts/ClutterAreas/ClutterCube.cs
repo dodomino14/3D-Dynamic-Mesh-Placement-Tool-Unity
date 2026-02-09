@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[System.Serializable]
 public class ClutterCube
 {
     public ClutterSquare TopSquare, BottomSquare, ForwardSquare, BackSquare, LeftSquare, RightSquare;
@@ -33,6 +34,11 @@ public class ClutterCube
         TopSquare.Translate(newValue);
         BottomSquare.Translate(newValue);
     }
+    public void MoveTo(Vector3 destination)
+    {
+        Vector3 delta = destination - GetCenter();
+        Translate(delta);
+    }
     public ClutterCube(GameObject owner)
     {
         if(owner == null) Debug.LogError("Attempted to build clutter cube with a null owner!");
@@ -41,15 +47,15 @@ public class ClutterCube
         //t/d - top/down
         //f/b - forward/back
         //l/r - left/right
-        ClutterPoint tfl = new ClutterPoint(new Vector3(-0.5f, 0.5f, 0.5f), this);
-        ClutterPoint tfr = new ClutterPoint(new Vector3(0.5f, 0.5f, 0.5f), this);
-        ClutterPoint tbl = new ClutterPoint(new Vector3(-0.5f, 0.5f, -0.5f), this);
-        ClutterPoint tbr = new ClutterPoint(new Vector3(0.5f, 0.5f, -0.5f), this);
+        ClutterPoint tfl = new ClutterPoint(new Vector3(-0.5f, 0.5f, 0.5f), owner);
+        ClutterPoint tfr = new ClutterPoint(new Vector3(0.5f, 0.5f, 0.5f), owner);
+        ClutterPoint tbl = new ClutterPoint(new Vector3(-0.5f, 0.5f, -0.5f), owner);
+        ClutterPoint tbr = new ClutterPoint(new Vector3(0.5f, 0.5f, -0.5f), owner);
 
-        ClutterPoint dfl = new ClutterPoint(new Vector3(-0.5f, -0.5f, 0.5f), this);
-        ClutterPoint dfr = new ClutterPoint(new Vector3(0.5f, -0.5f, 0.5f), this);
-        ClutterPoint dbl = new ClutterPoint(new Vector3(-0.5f, -0.5f, -0.5f), this);
-        ClutterPoint dbr = new ClutterPoint(new Vector3(0.5f, -0.5f, -0.5f), this);
+        ClutterPoint dfl = new ClutterPoint(new Vector3(-0.5f, -0.5f, 0.5f), owner);
+        ClutterPoint dfr = new ClutterPoint(new Vector3(0.5f, -0.5f, 0.5f), owner);
+        ClutterPoint dbl = new ClutterPoint(new Vector3(-0.5f, -0.5f, -0.5f), owner);
+        ClutterPoint dbr = new ClutterPoint(new Vector3(0.5f, -0.5f, -0.5f), owner);
         
         ClutterLine topFront = new ClutterLine{P1 = tfl, P2 = tfr};
         ClutterLine topBack =  new ClutterLine{P1 = tbl, P2 = tbr};
@@ -65,12 +71,12 @@ public class ClutterCube
         ClutterLine forwardRight = new ClutterLine{P1 = tfr, P2 = dfr};
         ClutterLine backLeft = new ClutterLine{P1 = tbl, P2 = dbl};
         ClutterLine backRight = new ClutterLine{P1 = tbr, P2 = dbr};
-        TopSquare = new ClutterSquare (topFront, topBack, topLeft, topRight, this);
-        BottomSquare = new ClutterSquare (downFront, downBack, downLeft, downRight, this);
-        ForwardSquare = new ClutterSquare (topFront, downFront, forwardLeft, forwardRight, this);
-        BackSquare = new ClutterSquare (topBack, downBack, backLeft, backRight, this);
-        LeftSquare = new ClutterSquare (topLeft,downLeft, forwardLeft, backLeft, this);
-        RightSquare = new ClutterSquare (topRight, downRight, forwardRight, backRight, this);
+        TopSquare = new ClutterSquare (topFront, topBack, topLeft, topRight, owner);
+        BottomSquare = new ClutterSquare (downFront, downBack, downLeft, downRight, owner);
+        ForwardSquare = new ClutterSquare (topFront, downFront, forwardLeft, forwardRight, owner);
+        BackSquare = new ClutterSquare (topBack, downBack, backLeft, backRight, owner);
+        LeftSquare = new ClutterSquare (topLeft,downLeft, forwardLeft, backLeft, owner);
+        RightSquare = new ClutterSquare (topRight, downRight, forwardRight, backRight, owner);
 
         TopSquare.MovementAxis = Vector3Int.up;
         BottomSquare.MovementAxis = Vector3Int.down;
@@ -89,14 +95,15 @@ public class ClutterCube
         DepthAxis.Item2 = BackSquare;
     }
 }
+[System.Serializable]
 public class ClutterSquare
 {
     public ClutterLine Top, Bottom, Left, Right;
     public Vector3Int MovementAxis;
-    private ClutterCube _owner;
+    private GameObject _owner;
     public Vector3 Center {get => GetCenter();}
-    public Vector3 LocalCenter {get => _owner.GameObject.transform.rotation * Center;}
-    public ClutterSquare(ClutterLine top, ClutterLine bottom, ClutterLine left, ClutterLine right, ClutterCube owner)
+    public Vector3 LocalCenter {get => _owner.transform.rotation * Center;}
+    public ClutterSquare(ClutterLine top, ClutterLine bottom, ClutterLine left, ClutterLine right, GameObject owner)
     {
         Top = top;
         Bottom = bottom;
@@ -122,6 +129,7 @@ public class ClutterSquare
         return (Top.GetCenter() + Bottom.GetCenter() + Left.GetCenter() + Right.GetCenter()) / 4f;
     }
 }
+[System.Serializable]
 public class ClutterLine
 {
     public ClutterPoint P1, P2;
@@ -159,12 +167,13 @@ public class ClutterLine
     }
     public Vector3 GetCenter() => (P1.Value + P2.Value) / 2f;
 }
+[System.Serializable]
 public class ClutterPoint
 {
     public Vector3 Value;
-    protected ClutterCube _owner;
-    public Vector3 LocalValue {get => _owner.GameObject.transform.rotation * Value;}
-    public ClutterPoint(Vector3 value, ClutterCube owner)
+    protected GameObject _owner;
+    public Vector3 LocalValue {get => _owner.transform.rotation * Value;}
+    public ClutterPoint(Vector3 value, GameObject owner)
     {
         Value = value;
         _owner = owner;
