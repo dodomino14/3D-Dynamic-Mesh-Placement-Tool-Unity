@@ -1,18 +1,15 @@
 using UnityEngine;
 using UnityEditor;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
 [CustomEditor(typeof(ClutterAreaVisualizer))]
 public class ClutterAreaEditorScript : Editor
 {
     private ClutterAreaComponent _clutter;
-    [SerializeField] private ClutterCube _cube;
+    private ClutterCube _cube;
     private ClutterAreaVisualizer _visualizer;
-    private Vector3 _previousDimensions;
-    private Vector3 _previousCenter;
     private MeshPlacementSettings _settings;
-    
     void OnEnable()
     {
         _visualizer = target as ClutterAreaVisualizer;
@@ -24,15 +21,9 @@ public class ClutterAreaEditorScript : Editor
         _visualizer = target as ClutterAreaVisualizer;
         _clutter = _visualizer.GetComponent<ClutterAreaComponent>();
         _settings = MeshPlacementManager.Settings;
-        if(_cube == null)
-        {
-            if(_visualizer.Cube == null) 
-                _visualizer.Cube = new ClutterCube(_visualizer.gameObject);
-            _cube = _visualizer.Cube;
-        }
-        PrefabUtility.RecordPrefabInstancePropertyModifications(_visualizer);
-        _previousDimensions = _clutter.Dimensions;
-        _previousCenter = _cube.Center;
+        if(_visualizer.Cube == null) _visualizer.Cube = new ClutterCube(_visualizer.gameObject.transform);
+        _cube = _visualizer.Cube;
+        _cube.GenerateUnSerializedData();
         UpdateInspectorValues();
         if(_settings != null && _settings.HideGizmosOnEnable) Tools.current = Tool.None;
         else Tools.current = Tool.Move;
@@ -46,7 +37,7 @@ public class ClutterAreaEditorScript : Editor
     void OnSceneGUI()
     {
         _settings = MeshPlacementManager.Settings;
-        if(_cube.GameObject == null) return;
+        if(_cube.Parent == null) return;
         DrawCenter();
         DrawBoxedClutterArea();
         DrawBoxDimensions();
@@ -55,24 +46,18 @@ public class ClutterAreaEditorScript : Editor
     private void DrawGrid()
     {
         if(_clutter.GridSize.x <= 0 || _clutter.GridSize.y <= 0) return;
-        Handles.color = _settings.GridColor;
         GridDisplayStyle displayFormat = _visualizer.GridDisplay;
+        Vector3 basePosition = _visualizer.gameObject.transform.position;
         if(displayFormat == GridDisplayStyle.BaseGrid || displayFormat == GridDisplayStyle.FullGrid)
         {
-            DrawGridRows(_cube.ForwardSquare.Bottom.P1.Value, _cube.BackSquare.Bottom.P2.Value, _visualizer.gameObject.transform.position);
-            DrawGridColumns(_cube.ForwardSquare.Bottom.P1.Value, _cube.BackSquare.Bottom.P2.Value, _visualizer.gameObject.transform.position);
+            DrawGridRows(_cube.BottomFrontLeft.Value, _cube.BottomBackRight.Value, basePosition);
+            DrawGridColumns(_cube.BottomFrontLeft.Value, _cube.BottomBackRight.Value, basePosition);
         }
-
-        if(displayFormat == GridDisplayStyle.VerticalGrid || displayFormat == GridDisplayStyle.FullGrid)
-        {
-            DrawGridRows(_cube.BackSquare.Bottom.P1.Value, _cube.TopSquare.Bottom.P2.Value, _visualizer.gameObject.transform.position);
-            DrawGridColumns(_cube.BackSquare.Bottom.P1.Value, _cube.TopSquare.Bottom.P2.Value, _visualizer.gameObject.transform.position);
-        }
-
         Handles.color = _settings.DefaultColor;
     }
     private void DrawGridColumns(Vector3 frontLeft, Vector3 bottomRight, Vector3 basePosition)
     {
+        Handles.color = _settings.GridColor;
         Vector3 areaDimensions = bottomRight - frontLeft;
         Vector3 start = frontLeft;
         Vector3 end = start + new Vector3(0, 0, areaDimensions.z);
@@ -90,6 +75,7 @@ public class ClutterAreaEditorScript : Editor
     }
     private void DrawGridRows(Vector3 frontLeft, Vector3 bottomRight, Vector3 basePosition)
     {
+        Handles.color = _settings.GridColor;
         Vector3 areaDimensions = bottomRight - frontLeft;
         Vector3 start = frontLeft;
         Vector3 end = start + new Vector3(areaDimensions.x, 0, 0);
@@ -122,34 +108,30 @@ public class ClutterAreaEditorScript : Editor
         Handles.color = _settings.CenterColor;
         EditorGUI.BeginChangeCheck();
         Vector3 currentCenter = _cube.LocalCenter;
-        Vector3 handlePosition = Handles.FreeMoveHandle(_cube.LocalCenter + _clutter.transform.position, _settings.HandleSize * 2f, _settings.SnapIncrement * Vector3.one, Handles.SphereHandleCap);
+        Vector3 handlePosition = Handles.PositionHandle(currentCenter + _clutter.transform.position, Quaternion.identity);
+        //Vector3 handlePosition = Handles.FreeMoveHandle(_cube.LocalCenter + _clutter.transform.position, _settings.HandleSize * 2f, _settings.SnapIncrement * Vector3.one, Handles.SphereHandleCap);
         if (EditorGUI.EndChangeCheck())
         {
-            if(_settings.XKey.IsPressed()) handlePosition = new Vector3(handlePosition.x - _cube.GameObject.transform.position.x, currentCenter.y, currentCenter.z);
-            else if(_settings.YKey.IsPressed()) handlePosition = new Vector3(currentCenter.x, handlePosition.y - _cube.GameObject.transform.position.y, currentCenter.z);
-            else if(_settings.ZKey.IsPressed()) handlePosition = new Vector3(currentCenter.x, currentCenter.y, handlePosition.z- _cube.GameObject.transform.position.z);
-            else handlePosition = currentCenter;
-            
-            _cube.MoveTo(handlePosition);
+            handlePosition -= _clutter.transform.position;
+            _cube.Slide(handlePosition - _cube.Center);
             UpdateInspectorValues();
         }
         Handles.color = _settings.DefaultColor;
-
     }
     private void DrawBoxedClutterArea()
     {
-        DrawSquare(_cube.TopSquare);
-        DrawSquare(_cube.BottomSquare);
-        DrawSquare(_cube.ForwardSquare);
-        DrawSquare(_cube.BackSquare);
-        DrawSquare(_cube.LeftSquare);
-        DrawSquare(_cube.RightSquare);
+        DrawSquare(_cube.Top);
+        DrawSquare(_cube.Bottom);
+        DrawSquare(_cube.Front);
+        DrawSquare(_cube.Back);
+        DrawSquare(_cube.Left);
+        DrawSquare(_cube.Right);
     }
     private void DrawBoxDimensions()
     {
-        DrawDimension(Color.blue, _cube.BottomForwardRight.LocalValue, _cube.BottomBottomRight.LocalValue);
-        DrawDimension(Color.red, _cube.BottomBottomLeft.LocalValue, _cube.BottomBottomRight.LocalValue);
-        DrawDimension(Color.green, _cube.BottomBottomRight.LocalValue, _cube.TopBottomRight.LocalValue);
+        DrawDimension(Color.blue,_cube.BottomBackRight.Local, _cube.BottomFrontRight.Local);
+        DrawDimension(Color.red, _cube.BottomFrontLeft.Local, _cube.BottomFrontRight.Local);
+        DrawDimension(Color.green, _cube.BottomFrontRight.Local, _cube.TopFrontRight.Local);
     }
     private void DrawDimension(Color color, Vector3 pointOne, Vector3 pointTwo)
     {
@@ -160,56 +142,57 @@ public class ClutterAreaEditorScript : Editor
         Handles.Label(basePosition + (pointOne + pointTwo) / 2f, (pointOne - pointTwo).magnitude + "", _settings.TextStyle);
         Handles.color = _settings.DefaultColor;
     }
-    private void DrawSquare(ClutterSquare square)
+    private void DrawSquare(List<ClutterPoint> points)
     {
         Vector3 center = _clutter.transform.position;
-        Handles.DrawLine(center + square.Top.P1.LocalValue, center + square.Top.P2.LocalValue);
-        Handles.DrawLine(center + square.Bottom.P1.LocalValue, center + square.Bottom.P2.LocalValue);
-        Handles.DrawLine(center + square.Left.P1.LocalValue, center + square.Left.P2.LocalValue);
-        Handles.DrawLine(center + square.Right.P1.LocalValue, center + square.Right.P2.LocalValue);
-        DrawSquareHandle(square);
+        for(int i = 1; i < points.Count; i++)
+        {
+            Handles.DrawLine(center + points[i - 1].Value, center + points[i].Value);
+        }
+        Handles.DrawLine(center + points[points.Count - 1].Value, center + points[0].Value);
+        DrawSquareHandle(points);
     }
-    private void DrawSquareHandle(ClutterSquare square)
+    private void DrawSquareHandle(List<ClutterPoint> points)
     {
-        Vector3 centerPosition = _clutter.transform.position + square.LocalCenter;
-        EditorGUI.BeginChangeCheck();        
-        Vector3 sliderMovement = Handles.Slider(centerPosition, square.MovementAxis, _settings.HandleSize, Handles.DotHandleCap, _settings.SnapIncrement);
+        Vector3 centerPosition = _clutter.transform.position + ClutterCube.GetCenterPoint(points);
+        EditorGUI.BeginChangeCheck();
+        Vector3 sliderMovement = Handles.Slider(centerPosition, _cube.GetMovementDirection(points), _settings.HandleSize, Handles.DotHandleCap, _settings.SnapIncrement);
         if (EditorGUI.EndChangeCheck())
         {
             sliderMovement -= _clutter.transform.position;
-            LockMovementAxis(square, ref sliderMovement);
-            square.Slide(sliderMovement);
+            _cube.MovePointsAlongAxis(points, sliderMovement);
             UpdateInspectorValues();
         }
     }
-    private void LockMovementAxis(ClutterSquare square, ref Vector3 movement)
-    {
-        if(square.MovementAxis.x == 0) movement.x = 0;
-        if(square.MovementAxis.y == 0) movement.y = 0;
-        if(square.MovementAxis.z == 0) movement.z = 0;
-    }
     private void UpdateInspectorValues()
     {
-        _clutter.Dimensions.x = _cube.Width;
-        _clutter.Dimensions.y = _cube.Height;
-        _clutter.Dimensions.z = _cube.Depth;
-        _previousDimensions = _clutter.Dimensions;
+        Vector3 dimensions = _cube.Dimensions;
+        _clutter.Dimensions.x = dimensions.x;
+        _clutter.Dimensions.y = dimensions.y;
+        _clutter.Dimensions.z = dimensions.z;
         _clutter.CenterPoint = _cube.Center;
-        _previousCenter = _cube.Center;
     }
     private void DimensionsUpdatedInEditor()
     {
-        Vector3 changedBy = _clutter.Dimensions - _previousDimensions;
-        Vector3 centerDelta = _clutter.CenterPoint - _previousCenter;
+        Vector3 changedBy = _clutter.Dimensions - _cube.Dimensions;
+        Vector3 centerDelta = _clutter.CenterPoint - _cube.Center;
         _cube = _visualizer.Cube;
         if(changedBy.x != 0)
-            _cube.TranslateAxis(_cube.HorizontalAxis, changedBy);
+        {
+            _cube.SlidePointsAlongAxis(_cube.Right, changedBy.x / 2f);
+            _cube.SlidePointsAlongAxis(_cube.Left, -changedBy.x / 2f);
+        }
         if(changedBy.y != 0)
-            _cube.TranslateAxis(_cube.VerticalAxis, changedBy);
+        {
+            _cube.SlidePointsAlongAxis(_cube.Top, changedBy.y / 2f);
+            _cube.SlidePointsAlongAxis(_cube.Bottom, -changedBy.y / 2f);
+        }
         if(changedBy.z != 0)
-            _cube.TranslateAxis(_cube.DepthAxis, changedBy);
-
-        _cube.Translate(centerDelta);
+        {
+            _cube.SlidePointsAlongAxis(_cube.Front, changedBy.z / 2f);
+            _cube.SlidePointsAlongAxis(_cube.Back, -changedBy.z / 2f);
+        } 
+        _cube.Slide(centerDelta);
         ConfigureDefaults();
     }
 }

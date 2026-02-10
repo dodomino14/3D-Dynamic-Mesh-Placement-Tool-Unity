@@ -225,7 +225,7 @@ Transform:
   m_GameObject: {fileID: 277007828}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.27751, y: 1, z: 0.387}
+  m_LocalPosition: {x: 5.27751, y: 1, z: 0.63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1001,7 +1001,7 @@ Transform:
   m_GameObject: {fileID: 1559824017}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 3}
+  m_LocalPosition: {x: 0, y: 0.5, z: 2.145}
   m_LocalScale: {x: 5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1020,7 +1020,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Dimensions: {x: 5, y: 1, z: 1}
-  CenterPoint: {x: 0, y: 1, z: 0}
+  CenterPoint: {x: 0, y: 1.5, z: 0}
   GridSize: {x: 0.2, y: 0.2}
   areaType: 0
 --- !u!114 &1559824023
@@ -1046,193 +1046,103 @@ MonoBehaviour:
     SerializationNodes: []
   GridDisplay: 0
   Cube:
-    TopSquare:
-      Top:
-        P1:
-          Value: {x: -2.5, y: 1.5, z: 0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: 2.5, y: 1.5, z: 0.5}
-          _owner: {fileID: 0}
-      Bottom:
-        P1:
-          Value: {x: -2.5, y: 1.5, z: -0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: 2.5, y: 1.5, z: -0.5}
-          _owner: {fileID: 0}
-      Left:
-        P1:
-          Value: {x: -2.5, y: 1.5, z: 0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: -2.5, y: 1.5, z: -0.5}
-          _owner: {fileID: 0}
-      Right:
-        P1:
-          Value: {x: 2.5, y: 1.5, z: 0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: 2.5, y: 1.5, z: -0.5}
-          _owner: {fileID: 0}
-      MovementAxis: {x: 0, y: 1, z: 0}
-      _owner: {fileID: 0}
-    BottomSquare:
-      Top:
-        P1:
-          Value: {x: -2.5, y: 0.5, z: 0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: 2.5, y: 0.5, z: 0.5}
-          _owner: {fileID: 0}
-      Bottom:
-        P1:
-          Value: {x: -2.5, y: 0.5, z: -0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: 2.5, y: 0.5, z: -0.5}
-          _owner: {fileID: 0}
-      Left:
-        P1:
-          Value: {x: -2.5, y: 0.5, z: 0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: -2.5, y: 0.5, z: -0.5}
-          _owner: {fileID: 0}
-      Right:
-        P1:
-          Value: {x: 2.5, y: 0.5, z: 0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: 2.5, y: 0.5, z: -0.5}
-          _owner: {fileID: 0}
-      MovementAxis: {x: 0, y: -1, z: 0}
-      _owner: {fileID: 0}
-    ForwardSquare:
-      Top:
-        P1:
-          Value: {x: -2.5, y: 1.5, z: 0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: 2.5, y: 1.5, z: 0.5}
-          _owner: {fileID: 0}
-      Bottom:
-        P1:
-          Value: {x: -2.5, y: 0.5, z: 0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: 2.5, y: 0.5, z: 0.5}
-          _owner: {fileID: 0}
-      Left:
-        P1:
-          Value: {x: -2.5, y: 1.5, z: 0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: -2.5, y: 0.5, z: 0.5}
-          _owner: {fileID: 0}
-      Right:
-        P1:
-          Value: {x: 2.5, y: 1.5, z: 0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: 2.5, y: 0.5, z: 0.5}
-          _owner: {fileID: 0}
-      MovementAxis: {x: 0, y: 0, z: 1}
-      _owner: {fileID: 0}
-    BackSquare:
-      Top:
-        P1:
-          Value: {x: -2.5, y: 1.5, z: -0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: 2.5, y: 1.5, z: -0.5}
-          _owner: {fileID: 0}
-      Bottom:
-        P1:
-          Value: {x: -2.5, y: 0.5, z: -0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: 2.5, y: 0.5, z: -0.5}
-          _owner: {fileID: 0}
-      Left:
-        P1:
-          Value: {x: -2.5, y: 1.5, z: -0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: -2.5, y: 0.5, z: -0.5}
-          _owner: {fileID: 0}
-      Right:
-        P1:
-          Value: {x: 2.5, y: 1.5, z: -0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: 2.5, y: 0.5, z: -0.5}
-          _owner: {fileID: 0}
-      MovementAxis: {x: 0, y: 0, z: -1}
-      _owner: {fileID: 0}
-    LeftSquare:
-      Top:
-        P1:
-          Value: {x: -2.5, y: 1.5, z: 0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: -2.5, y: 1.5, z: -0.5}
-          _owner: {fileID: 0}
-      Bottom:
-        P1:
-          Value: {x: -2.5, y: 0.5, z: 0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: -2.5, y: 0.5, z: -0.5}
-          _owner: {fileID: 0}
-      Left:
-        P1:
-          Value: {x: -2.5, y: 1.5, z: 0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: -2.5, y: 0.5, z: 0.5}
-          _owner: {fileID: 0}
-      Right:
-        P1:
-          Value: {x: -2.5, y: 1.5, z: -0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: -2.5, y: 0.5, z: -0.5}
-          _owner: {fileID: 0}
-      MovementAxis: {x: -1, y: 0, z: 0}
-      _owner: {fileID: 0}
-    RightSquare:
-      Top:
-        P1:
-          Value: {x: 2.5, y: 1.5, z: 0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: 2.5, y: 1.5, z: -0.5}
-          _owner: {fileID: 0}
-      Bottom:
-        P1:
-          Value: {x: 2.5, y: 0.5, z: 0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: 2.5, y: 0.5, z: -0.5}
-          _owner: {fileID: 0}
-      Left:
-        P1:
-          Value: {x: 2.5, y: 1.5, z: 0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: 2.5, y: 0.5, z: 0.5}
-          _owner: {fileID: 0}
-      Right:
-        P1:
-          Value: {x: 2.5, y: 1.5, z: -0.5}
-          _owner: {fileID: 0}
-        P2:
-          Value: {x: 2.5, y: 0.5, z: -0.5}
-          _owner: {fileID: 0}
-      MovementAxis: {x: 1, y: 0, z: 0}
-      _owner: {fileID: 0}
-    GameObject: {fileID: 1559824017}
+    Top:
+    - Value: {x: -2.5, y: 2, z: -0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: 2.5, y: 2, z: -0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: 2.5, y: 2, z: 0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: -2.5, y: 2, z: 0.5}
+      Parent: {fileID: 1559824021}
+    Bottom:
+    - Value: {x: -2.5, y: 1, z: -0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: 2.5, y: 1, z: -0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: 2.5, y: 1, z: 0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: -2.5, y: 1, z: 0.5}
+      Parent: {fileID: 1559824021}
+    Left:
+    - Value: {x: -2.5, y: 2, z: -0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: -2.5, y: 2, z: 0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: -2.5, y: 1, z: 0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: -2.5, y: 1, z: -0.5}
+      Parent: {fileID: 1559824021}
+    Right:
+    - Value: {x: 2.5, y: 2, z: -0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: 2.5, y: 2, z: 0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: 2.5, y: 1, z: 0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: 2.5, y: 1, z: -0.5}
+      Parent: {fileID: 1559824021}
+    Front:
+    - Value: {x: -2.5, y: 2, z: 0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: 2.5, y: 2, z: 0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: 2.5, y: 1, z: 0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: -2.5, y: 1, z: 0.5}
+      Parent: {fileID: 1559824021}
+    Back:
+    - Value: {x: -2.5, y: 2, z: -0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: 2.5, y: 2, z: -0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: 2.5, y: 1, z: -0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: -2.5, y: 1, z: -0.5}
+      Parent: {fileID: 1559824021}
+    Parent: {fileID: 1559824021}
+    _topBackLeft:
+      Value: {x: -2.5, y: 2, z: -0.5}
+      Parent: {fileID: 1559824021}
+    _topBackRight:
+      Value: {x: 2.5, y: 2, z: -0.5}
+      Parent: {fileID: 1559824021}
+    _topFrontLeft:
+      Value: {x: -2.5, y: 2, z: 0.5}
+      Parent: {fileID: 1559824021}
+    _topFrontRight:
+      Value: {x: 2.5, y: 2, z: 0.5}
+      Parent: {fileID: 1559824021}
+    _bottomBackLeft:
+      Value: {x: -2.5, y: 1, z: -0.5}
+      Parent: {fileID: 1559824021}
+    _bottomBackRight:
+      Value: {x: 2.5, y: 1, z: -0.5}
+      Parent: {fileID: 1559824021}
+    _bottomFrontLeft:
+      Value: {x: -2.5, y: 1, z: 0.5}
+      Parent: {fileID: 1559824021}
+    _bottomFrontRight:
+      Value: {x: 2.5, y: 1, z: 0.5}
+      Parent: {fileID: 1559824021}
+    _points:
+    - Value: {x: -2.5, y: 2, z: -0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: 2.5, y: 2, z: -0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: -2.5, y: 2, z: 0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: 2.5, y: 2, z: 0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: -2.5, y: 1, z: -0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: 2.5, y: 1, z: -0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: -2.5, y: 1, z: 0.5}
+      Parent: {fileID: 1559824021}
+    - Value: {x: 2.5, y: 1, z: 0.5}
+      Parent: {fileID: 1559824021}
+    _center: {x: 0, y: 1.5, z: 0}
 --- !u!1 &1704700601
 GameObject:
   m_ObjectHideFlags: 0
