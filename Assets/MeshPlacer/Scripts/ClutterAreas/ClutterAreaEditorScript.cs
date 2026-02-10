@@ -16,13 +16,8 @@ public class ClutterAreaEditorScript : Editor
     void OnEnable()
     {
         _visualizer = target as ClutterAreaVisualizer;
-        _visualizer.StartCoroutine(ConfigureAtEndOfFrame());
-        _visualizer.OnDimensionsUpdatedInInspector += DimensionsUpdatedInEditor;
-    }
-    IEnumerator ConfigureAtEndOfFrame()
-    {
-        yield return null;
         ConfigureDefaults();
+        _visualizer.OnDimensionsUpdatedInInspector += DimensionsUpdatedInEditor;
     }
     void ConfigureDefaults()
     {
@@ -35,19 +30,17 @@ public class ClutterAreaEditorScript : Editor
                 _visualizer.Cube = new ClutterCube(_visualizer.gameObject);
             _cube = _visualizer.Cube;
         }
+        PrefabUtility.RecordPrefabInstancePropertyModifications(_visualizer);
         _previousDimensions = _clutter.Dimensions;
         _previousCenter = _cube.Center;
         UpdateInspectorValues();
         if(_settings != null && _settings.HideGizmosOnEnable) Tools.current = Tool.None;
         else Tools.current = Tool.Move;
     }
-    private void YPressed(InputAction.CallbackContext context)
-    {
-        Debug.Log("Y Pressed");
-    }
     void OnDisable()
     {
         _visualizer.OnDimensionsUpdatedInInspector -= DimensionsUpdatedInEditor;
+        EditorUtility.SetDirty(_visualizer);
         Tools.current = Tool.Move;
     }
     void OnSceneGUI()

@@ -6,7 +6,7 @@ public enum GridDisplayStyle {BaseGrid, VerticalGrid, FullGrid, None}
 public class ClutterAreaVisualizer : SerializedMonoBehaviour
 {
     public GridDisplayStyle GridDisplay;
-    [SerializeField, HideInInspector] public ClutterCube Cube;
+    [SerializeField] public ClutterCube Cube;
 
     public delegate void DimensionUpdate();
     public event DimensionUpdate OnDimensionsUpdatedInInspector;

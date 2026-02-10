@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public class ClutterCube
+public class ClutterCube 
 {
     public ClutterSquare TopSquare, BottomSquare, ForwardSquare, BackSquare, LeftSquare, RightSquare;
     public Vector3 Center { get => GetCenter();}
@@ -10,11 +10,6 @@ public class ClutterCube
     public float Height {get => TopSquare.Center.y - BottomSquare.Center.y;}
     public float Depth {get => ForwardSquare.Center.z - BackSquare.Center.z;}
     public (ClutterSquare, ClutterSquare) HorizontalAxis, VerticalAxis, DepthAxis;
-    public void TranslateAxis((ClutterSquare, ClutterSquare) axis, Vector3 delta)
-    {
-        axis.Item1.Translate(delta / 2f);
-        axis.Item2.Translate(-delta / 2f);
-    }
     public ClutterPoint TopForwardLeft {get => TopSquare.Top.P1;}
     public ClutterPoint TopForwardRight {get => TopSquare.Top.P2;}
     public ClutterPoint TopBottomRight {get => TopSquare.Bottom.P2;}
@@ -23,8 +18,12 @@ public class ClutterCube
     public ClutterPoint BottomForwardRight {get => BottomSquare.Top.P2;}
     public ClutterPoint BottomBottomRight {get => BottomSquare.Bottom.P2;}
     public ClutterPoint BottomBottomLeft {get => BottomSquare.Bottom.P1;}
-
     public GameObject GameObject;
+    public void TranslateAxis((ClutterSquare, ClutterSquare) axis, Vector3 delta)
+    {
+        axis.Item1.Translate(delta / 2f);
+        axis.Item2.Translate(-delta / 2f);
+    }
     public Vector3 GetCenter()
     {
         return (TopSquare.Center + BottomSquare.Center + LeftSquare.Center + RightSquare.Center + ForwardSquare.Center + BackSquare.Center) / 6.0f;
@@ -96,12 +95,12 @@ public class ClutterCube
     }
 }
 [System.Serializable]
-public class ClutterSquare
+public class ClutterSquare 
 {
     public ClutterLine Top, Bottom, Left, Right;
     public Vector3Int MovementAxis;
-    private GameObject _owner;
     public Vector3 Center {get => GetCenter();}
+    [SerializeField] private GameObject _owner;
     public Vector3 LocalCenter {get => _owner.transform.rotation * Center;}
     public ClutterSquare(ClutterLine top, ClutterLine bottom, ClutterLine left, ClutterLine right, GameObject owner)
     {
@@ -130,7 +129,7 @@ public class ClutterSquare
     }
 }
 [System.Serializable]
-public class ClutterLine
+public class ClutterLine 
 {
     public ClutterPoint P1, P2;
 
@@ -168,10 +167,10 @@ public class ClutterLine
     public Vector3 GetCenter() => (P1.Value + P2.Value) / 2f;
 }
 [System.Serializable]
-public class ClutterPoint
+public class ClutterPoint 
 {
     public Vector3 Value;
-    protected GameObject _owner;
+    [SerializeField] protected GameObject _owner;
     public Vector3 LocalValue {get => _owner.transform.rotation * Value;}
     public ClutterPoint(Vector3 value, GameObject owner)
     {

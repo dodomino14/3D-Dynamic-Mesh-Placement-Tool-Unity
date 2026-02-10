@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d9b0719266051e4ab927d85d29879c2, type: 3}
   m_Name: Mesh Placement Settings
   m_EditorClassIdentifier: Assembly-CSharp::MeshPlacementSettings
+  _yKey: 39
+  _xKey: 38
+  _zKey: 40
   _snapIncrement: 0.25
   _handleSize: 0.025
   _defaultColor: {r: 1, g: 1, b: 1, a: 1}
