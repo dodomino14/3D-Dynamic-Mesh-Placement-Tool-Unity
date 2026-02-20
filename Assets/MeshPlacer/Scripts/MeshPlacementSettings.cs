@@ -13,6 +13,7 @@ public class MeshPlacementSettings : ScriptableObject
     public Color TextColor {get => _textColor;}
     public GUIStyle TextStyle {get => _textStyle;}
     public bool HideGizmosOnEnable {get => _hideGizmosOnEnable;}
+    public bool ShowHandlesOnInteraction {get => _showHandlesOnInteraction;}
     public KeyControl XKey {get => Keyboard.current[_xKey];}
     public KeyControl YKey {get => Keyboard.current[_yKey];}
     public KeyControl ZKey {get => Keyboard.current[_zKey];}
@@ -21,5 +22,5 @@ public class MeshPlacementSettings : ScriptableObject
     [SerializeField] private float _handleSize;
     [SerializeField] private Color _defaultColor, _gridColor, _errorColor, _centerColor, _textColor;
     [SerializeField] private GUIStyle _textStyle;
-    [SerializeField] private bool _hideGizmosOnEnable;
+    [SerializeField] private bool _hideGizmosOnEnable, _showHandlesOnInteraction;
 }

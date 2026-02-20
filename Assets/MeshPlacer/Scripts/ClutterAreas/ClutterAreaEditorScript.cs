@@ -38,10 +38,13 @@ public class ClutterAreaEditorScript : Editor
     {
         _settings = MeshPlacementManager.Settings;
         if(_cube.Parent == null) return;
+        EditorGUI.BeginChangeCheck();
         DrawCenter();
         DrawBoxedClutterArea();
         DrawBoxDimensions();
         DrawGrid();
+        if (EditorGUI.EndChangeCheck() && _settings.ShowHandlesOnInteraction)
+            Tools.current = Tool.None;
     }
     private void DrawGrid()
     {
@@ -105,11 +108,10 @@ public class ClutterAreaEditorScript : Editor
     }
     private void DrawCenter()
     {
+        if(Tools.current != Tool.None) return;
         Handles.color = _settings.CenterColor;
         EditorGUI.BeginChangeCheck();
-        Vector3 currentCenter = _cube.LocalCenter;
-        Vector3 handlePosition = Handles.PositionHandle(currentCenter + _clutter.transform.position, Quaternion.identity);
-        //Vector3 handlePosition = Handles.FreeMoveHandle(_cube.LocalCenter + _clutter.transform.position, _settings.HandleSize * 2f, _settings.SnapIncrement * Vector3.one, Handles.SphereHandleCap);
+        Vector3 handlePosition = Handles.PositionHandle(_cube.LocalCenter + _clutter.transform.position, Quaternion.identity);
         if (EditorGUI.EndChangeCheck())
         {
             handlePosition -= _clutter.transform.position;
